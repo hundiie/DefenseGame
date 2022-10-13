@@ -64,8 +64,8 @@
     <Compile Include="Assets\01. Script\03. Map\Plane.cs" />
     <Compile Include="Assets\01. Script\04. Monster\MonsterEffect.cs" />
     <Compile Include="Assets\01. Script\01. Camera\CameraMove.cs" />
-    <Compile Include="Assets\01. Script\01. Camera\CameraPoint.cs" />
     <Compile Include="Assets\01. Script\04. Monster\MonsterHealth.cs" />
+    <Compile Include="Assets\01. Script\01. Camera\CameraPoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
