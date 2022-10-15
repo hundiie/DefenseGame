@@ -35,6 +35,8 @@ public class MonsterHealth : MonoBehaviour
     #region HP
     public void SetHP(float Num) { HP = Num; }
     public void AddHP(float Num) { HP += Num; }
+    public float GetHP() { return HP; }
+
     #endregion
     #region Die
     public bool GetDie()

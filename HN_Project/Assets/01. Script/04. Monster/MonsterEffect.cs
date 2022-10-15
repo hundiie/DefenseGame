@@ -1,22 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public enum DamageType
+{
+    Physics,
+    Magic,
+    True
+}
 
 public class MonsterEffect : MonoBehaviour
 {
     private MonsterStatus _MonsterStatus;
     private MonsterHealth _MonsterHealth;
     private MonsterNav _MonsterNav;
-
+    // 색 관련
     private Renderer _Renderer;
     private Color NomalColor;
-    
+
+    // 방어 관련
     private float Armor;
     private float Resistance;
-    private float Defense_Rank;
-    private float P_Armor;
-    private float P_Resistance;
+    private float DefenseValue;
 
+    // 데미지 관련
     [Header("Die")]
     public bool Die;
 
@@ -32,6 +38,10 @@ public class MonsterEffect : MonoBehaviour
     public int SlowStack;
     public bool Slow;
 
+    [Header("Freezing")]
+    public int FreezingStack;
+    public bool Freezing;
+
     private void Awake()
     {
         _MonsterStatus = GetComponent<MonsterStatus>();
@@ -43,52 +53,89 @@ public class MonsterEffect : MonoBehaviour
 
         Armor = _MonsterStatus.GetArmor();
         Resistance = _MonsterStatus.GetResistance();
-        Defense_Rank = _MonsterStatus.GetDefenseRank();
+        DefenseValue = _MonsterStatus.GetDefenseValue();
     }
+
     private void Update()
     {
-        if (_MonsterHealth.GetDie() && !Die)
-        {
-            Die = true;
-            AddDie();
-        }
-        P_Armor = Defense_Rank / (Defense_Rank + Armor);
-        P_Resistance = Defense_Rank / (Defense_Rank + Resistance);
-
-        //---------test----------
+        //테스트 용도
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            AddPhysicsHit(0.1f);
+            AddEffect_Nomal(DamageType.True, 1, 5);
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            AddPoison(5, 5);
+            AddEffect_Poison(DamageType.Physics, 0, 5, 5);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            AddFire(5, 1, 5);
+            AddEffect_Fire(DamageType.Magic, 0, 5, 1, 5);
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
-            AddSlow(10, 50, 5);
+            AddEffect_Slow(DamageType.True, 0, 10, 50, 5);
         }
-        
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            AddEffect_Freezing(DamageType.True, 0, 10, 3);
+        }
     }
 
     private void ChangeColor(Color color)
+    { _Renderer.material.color = color; }
+
+    // -------------------- 데미지 주는곳 --------------------
+    #region AddDamage
+
+    public void AddDamage(DamageType damageType, float Piercing, float Damage) // 데미지 넣을때 사용
     {
-        _Renderer.material.color = color;
+        float TakeDamage = GetTakeDamage(damageType, Piercing, Damage);
+        _MonsterHealth.AddHP(-TakeDamage);
+        if (0 >= _MonsterHealth.GetHP() && !Die)
+        { AddDamage_Die(); }
+        return;
     }
 
-    #region Die
-    public void AddDie()
+    private float TakeDamage(float Defense)
+    { return DefenseValue / (DefenseValue + Defense); }
+    private float GetTakeDamage(DamageType damageType, float Piercing, float Damage)
     {
+        switch (damageType)
+        {
+            case DamageType.Physics:
+                {
+                    float Take = Armor - Piercing;
+                    if (Take < 0) { Take = 0; }
+                    return Damage * TakeDamage(Take);
+                }
+            case DamageType.Magic:
+                {
+                    float Take = Resistance - Piercing;
+                    if (Take < 0) { Take = 0; }
+                    return Damage * TakeDamage(Take);
+                }
+            case DamageType.True:
+                {
+                    return Damage;
+                };
+            default:
+                break;
+        }
+        return 0;
+    }
+
+    #endregion
+    // -------------------- 죽음 --------------------
+    #region Die
+
+    public void AddDamage_Die()
+    {
+        Die = true;
         StopAllCoroutines();
         StartCoroutine(_AddDie());
     }
     private IEnumerator _AddDie()
     {
-        
         _MonsterNav.SetMoveSpeed(0);
         ChangeColor(Color.black);
 
@@ -102,67 +149,38 @@ public class MonsterEffect : MonoBehaviour
 
         Destroy(gameObject);
     }
-    #endregion
 
-    #region PhysicsDanage
-    /// <summary>
-    /// 물리 데미지 (기본 데미지)
-    /// </summary>
-    /// <param name="Damage">받는 데미지</param>
-    public void AddPhysicsHit(float Damage)
+    #endregion
+    // -------------------- 노말 효과 --------------------
+    #region Nomal
+
+    public void AddEffect_Nomal(DamageType damageType, float Piercing, float Damage)
     {
-        if (_MonsterHealth.GetDie()) { return; }
-        _MonsterHealth.AddHP(-Damage * P_Armor);
+        AddDamage(damageType, Damage, Piercing);
     }
-    #endregion
 
-    #region MagicDanage
-    /// <summary>
-    /// 마법 데미지 (기본 데미지)
-    /// </summary>
-    /// <param name="Damage">받는 데미지</param>
-    public void AddMagicHit(float Damage)
-    {
-        if (_MonsterHealth.GetDie()){ return; }
-        _MonsterHealth.AddHP(-Damage * P_Resistance);
-    }
     #endregion
-
-    #region TrueDanage
-    /// <summary>
-    /// 고정 데미지 (기본 데미지)
-    /// </summary>
-    /// <param name="Damage">받는 데미지</param>
-    public void AddTrueHit(float Damage)
-    {
-        if (_MonsterHealth.GetDie()) { return; }
-        _MonsterHealth.AddHP(-Damage);
-    }
-    #endregion
-
+    // -------------------- 독 효과 --------------------
     #region Poison
-    /// <summary>
-    /// 독 데미지 (지속적인 마법데미지, 중첩 O)
-    /// </summary>
-    /// <param name="Damage">초당 독 데미지</param>
-    /// <param name="Time">독 지속시간</param>
-    public void AddPoison(float Damage, float Time)
+
+    public void AddEffect_Poison(DamageType damageType, float Piercing, float SecondDamage, float PoisonTime)
     {
         if (_MonsterHealth.GetDie()) { return; }
-        StartCoroutine(_AddPoison(Damage, Time));
+        StartCoroutine(_AddPoison(damageType, Piercing, SecondDamage, PoisonTime));
     }
-    private IEnumerator _AddPoison(float SecondDamage, float PoisonTime)
+    private IEnumerator _AddPoison(DamageType damageType, float Piercing, float SecondDamage, float PoisonTime)
     {
         PoisonStack += 1;
 
         Poison = true;
+        // 독 효과
         ChangeColor(Color.magenta);
-    
+
         float Delta = 0;
         while (Delta < PoisonTime)
         {
             Delta += Time.deltaTime;
-            AddMagicHit(Time.deltaTime * SecondDamage);
+            AddDamage(damageType, Piercing, Time.deltaTime * SecondDamage);
             yield return null;
         }
 
@@ -170,72 +188,113 @@ public class MonsterEffect : MonoBehaviour
         if (PoisonStack == 0)
         {
             Poison = false;
+            // 독 효과 제거
             ChangeColor(NomalColor);
         }
     }
+    public bool GetStatePoison(){ return Poison; }
+    public int GetStackPoison() { return PoisonStack; }
     #endregion
-
+    // -------------------- 불 효과 --------------------
     #region Fire
-
-    /// <summary>
-    /// 화염 데미지 (틱 마다 마법데미지, 중첩 O)
-    /// </summary>
-    /// <param name="TickDamage">틱 마다 받는 데미지</param>
-    /// <param name="TickSpeed">틱 속도</param>
-    /// <param name="Tick">틱 개수</param>
-    public void AddFire(float TickDamage, float TickSpeed, int Tick)
+    private List<float> FireDamage;
+    public void AddEffect_Fire(DamageType damageType, float Piercing, float TickDamage, float TickSpeed, int TickCount)
     {
         if (_MonsterHealth.GetDie()) { return; }
-        StartCoroutine(_AddFire(TickDamage, TickSpeed, Tick));
+        StartCoroutine(_AddFire(damageType, Piercing, TickDamage, TickSpeed, TickCount));
     }
-    private IEnumerator _AddFire(float TickDamage, float TickSpeed, int Tick)
+    private IEnumerator _AddFire(DamageType damageType, float Piercing, float TickDamage, float TickSpeed, int TickCount)
     {
         FireStack += 1;
 
         Fire = true;
+        // 화염 효과
         ChangeColor(Color.red);
-        
-        for (int i = 0; i < Tick - 1; i++)
+
+        for (int i = 0; i < TickCount - 1; i++)
         {
-            AddMagicHit(TickDamage);
+            AddDamage(damageType, Piercing, TickDamage);
             yield return new WaitForSeconds(TickSpeed);
         }
-        AddMagicHit(TickDamage);
-
+        AddDamage(damageType, Piercing, TickDamage);
         FireStack -= 1;
         if (FireStack == 0)
         {
             Fire = false;
+            // 화염 효과 제거
             ChangeColor(NomalColor);
         }
     }
+    public bool GetStateFire() { return Fire; }
+    public int GetStackFire() { return FireStack; }
     #endregion
-
+    // -------------------- 슬로우 효과 --------------------
     #region Slow
-    public void AddSlow(float Damage, float Slow, float SlowTime)
+
+    public void AddEffect_Slow(DamageType damageType, float Piercing, float Damage, float Slow_Per, float SlowTime)
     {
         if (_MonsterHealth.GetDie()) { return; }
-        StartCoroutine(_AddSlow(Damage, Slow, SlowTime));
+        StartCoroutine(_AddSlow(damageType, Piercing, Damage, Slow_Per, SlowTime));
     }
-    private IEnumerator _AddSlow(float Damage, float SlowP, float SlowTime)
+    private IEnumerator _AddSlow(DamageType damageType, float Piercing, float Damage, float Slow_Per, float SlowTime)
     {
         SlowStack += 1;
-        AddPhysicsHit(Damage);
+
         Slow = true;
+        _MonsterNav.SetMoveSpeed((_MonsterStatus.GetMoveSpeed() / 100) * Slow_Per);
+        AddDamage(damageType, Piercing, Damage);
+        // 슬로우 효과
         ChangeColor(Color.blue);
-    
-        _MonsterNav.SetMoveSpeed((_MonsterStatus.GetMoveSpeed() / 100) * SlowP);
 
         yield return new WaitForSeconds(SlowTime);
 
         SlowStack -= 1;
-        if (PoisonStack == 0)
+        if (SlowStack <= 0)
         {
             Slow = false;
-            ChangeColor(NomalColor);
             _MonsterNav.SetMoveSpeed(_MonsterStatus.GetMoveSpeed());
+            // 슬로우 효과 제거
+            ChangeColor(NomalColor);
+        }
+    }
+    public bool GetStateSlow() { return Slow; }
+    public int GetStackSlow() { return SlowStack; }
+    #endregion
+    // -------------------- 동결 효과 --------------------
+    #region Freezing
+
+    public void AddEffect_Freezing(DamageType damageType, float Piercing, float Damage, float FreezingTime)
+    {
+        if (_MonsterHealth.GetDie()) { return; }
+        StartCoroutine(_AddFreezing(damageType, Piercing, Damage, FreezingTime));
+    }
+    private IEnumerator _AddFreezing(DamageType damageType, float Piercing, float Damage, float FreezingTime)
+    {
+        FreezingStack += 1;
+
+        Freezing = true;
+        AddDamage(damageType, Piercing, Damage);
+        _MonsterNav.SetNavMesh(false);
+        // 동결 효과
+        ChangeColor(Color.white);
+
+        yield return new WaitForSeconds(FreezingTime);
+
+        FreezingStack -= 1;
+        if (FreezingStack <= 0)
+        {
+            Freezing = false;
+            _MonsterNav.SetNavMesh(true);
+            // 동결 효과 제거
+            ChangeColor(NomalColor);
         }
     }
     #endregion
+    // -------------------- 받는 피해 증가 효과 --------------------
+    #region IDT (Increased Damage Taken)
 
+
+
+
+    #endregion
 }

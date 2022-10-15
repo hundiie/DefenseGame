@@ -12,7 +12,7 @@ public class MonsterStatus : MonoBehaviour
     public float MoveSpeed;
 
     [Header("Defense")]
-    public float DefenseRank = 50;// 낮을수록 방어의 효율이 좋아짐
+    public float DefenseValue = 50;// 낮을수록 방어의 효율이 좋아짐
     public float Armor;
     public float Resistance;
 
@@ -28,7 +28,7 @@ public class MonsterStatus : MonoBehaviour
     
     public float GetArmor() { return Armor; }
     public float GetResistance() { return Resistance; }
-    public float GetDefenseRank() { return DefenseRank; }
+    public float GetDefenseValue() { return DefenseValue; }
 
 
 

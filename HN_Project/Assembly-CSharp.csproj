@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\01. Script\04. Monster\MonsterNav.cs" />
+    <Compile Include="Assets\01. Script\05. Tower\TowerManager.cs" />
     <Compile Include="Assets\01. Script\04. Monster\MonsterManager.cs" />
     <Compile Include="Assets\01. Script\02. Player\PlayerCreate.cs" />
     <Compile Include="Assets\01. Script\02. Player\PlayerInput.cs" />
@@ -66,6 +67,13 @@
     <Compile Include="Assets\01. Script\01. Camera\CameraMove.cs" />
     <Compile Include="Assets\01. Script\04. Monster\MonsterHealth.cs" />
     <Compile Include="Assets\01. Script\01. Camera\CameraPoint.cs" />
+    <Compile Include="Assets\01. Script\GameManager.cs" />
+    <Compile Include="Assets\01. Script\06. UI\00. Button\ButtonTitle.cs" />
+    <Compile Include="Assets\01. Script\07. Scene\SceneLoad.cs" />
+    <Compile Include="Assets\01. Script\06. UI\00. Button\ButtonLobby.cs" />
+    <Compile Include="Assets\01. Script\05. Tower\TowerStatus.cs" />
+    <Compile Include="Assets\01. Script\02. Player\PlayerStatus.cs" />
+    <Compile Include="Assets\01. Script\06. UI\UI_Tower.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class CameraPoint : MonoBehaviour
 {
-    private static GameObject mousePoint;
-
-    private void Start()
-    {
-        mousePoint = transform.GetChild(0).gameObject;
-    }
-
     private static GameObject MousePoint(string LayerName)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

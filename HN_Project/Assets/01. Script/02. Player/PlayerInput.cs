@@ -8,8 +8,12 @@ public class PlayerInput : MonoBehaviour
     public static float Vertical { get; private set; }
 
     public static bool Key_MouseL { get; private set; }
+    public static bool Key_MouseL_Up { get; private set; }
+    public static bool Key_MouseL_Down { get; private set; }
     public static bool Key_MouseR { get; private set; }
-    
+    public static bool Key_MouseR_Up { get; private set; }
+    public static bool Key_MouseR_Down { get; private set; }
+
     public static bool Key_Num0 { get; private set; }
     public static bool Key_Num1 { get; private set; }
     public static bool Key_Num2 { get; private set; }
@@ -36,7 +40,12 @@ public class PlayerInput : MonoBehaviour
         Vertical = Input.GetAxisRaw("Vertical");
 
         Key_MouseL = Input.GetMouseButton(0);
+        Key_MouseL_Up = Input.GetMouseButtonUp(0);
+        Key_MouseL_Down = Input.GetMouseButtonDown(0);
         Key_MouseR = Input.GetMouseButton(1);
+        Key_MouseR_Up = Input.GetMouseButtonUp(1);
+        Key_MouseR_Down = Input.GetMouseButtonDown(1);
+
 
         Key_Num0 = Input.GetKey(KeyCode.Alpha0);
         Key_Num1 = Input.GetKey(KeyCode.Alpha1);
