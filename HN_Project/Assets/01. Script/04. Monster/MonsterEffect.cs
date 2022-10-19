@@ -10,6 +10,9 @@ public enum DamageType
 
 public class MonsterEffect : MonoBehaviour
 {
+    //float s = 2;
+    //1 / s √ 
+
     private MonsterStatus _MonsterStatus;
     private MonsterHealth _MonsterHealth;
     private MonsterNav _MonsterNav;

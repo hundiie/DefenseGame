@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,160 +55,96 @@ public class TowerManager : MonoBehaviour
     }
     #endregion
     //======================= À§ÂÊ ½Ì±ÛÅæ ÄÚµå =======================
-
+    
+    
     public static GameObject[] TowerPrefab;
+
     public static int GetTowerPrefabCount(){ return TowerPrefab.Length; }
     public static GameObject GetTowerPrefab(int TowerNum){ return TowerPrefab[TowerNum]; }
     private void Start()
     {
         TowerPrefab = Resources.LoadAll<GameObject>("01. Prefab/02. Tower");
-        
-        GetNomalTowerStat();
-        GetPoisonTowerStat();
-        GetFireTowerStat();
-        GetSlowTowerStat();
+
+        for (int i = 0; i < TowerPrefab.Length; i++)
+        {
+            TowerStatus DataA = TowerPrefab[i].GetComponent<TowerStatus>();
+            SetTowerStatData(DataA);
+            TowerUpgread DataB = TowerPrefab[i].GetComponent<TowerUpgread>();
+            SetTowerUpgreadData(DataB);
+        }
     }
 
-    #region Nomal Tower
-    [Header("Nomal Attack")]
-    public static float Nomal_Attack_Power;
-    public static float Nomal_Attack_Speed;
-    public static float Nomal_Attack_Pierce;
-    public static float Nomal_Attack_Range;
+    //=========== TowerDATA ===========
 
-    [Header("Nomal Target")]
-    public static int Nomal_Target_Multi;
-    public static int Nomal_Target_chain;
+    private static List<TowerStatus> TowerDataStat = new List<TowerStatus>();
+    private static List<TowerUpgread> TowerDatabaUp = new List<TowerUpgread>();
 
-    [Header("Nomal Explosion")]
-    public static float Nomal_Explosion_Range;
-    private void GetNomalTowerStat()
+    public void SetTowerStatData(TowerStatus towerStatus)
     {
-        TowerStatus NOMAL = TowerPrefab[0].GetComponent<TowerStatus>();
-        Nomal_Attack_Power = NOMAL.GetAttack_Power();
-        Nomal_Attack_Speed = NOMAL.GetAttack_Speed();
-        Nomal_Attack_Pierce = NOMAL.GetAttack_Pierce();
-        Nomal_Attack_Range = NOMAL.GetAttack_Range();
-
-        Nomal_Target_Multi = NOMAL.GetTaget_Multi();
-        Nomal_Target_chain = NOMAL.GetTaget_chain();
-        
-        Nomal_Explosion_Range = NOMAL.GetExplosion_Range();
+        TowerDataStat.Add(towerStatus);
     }
-
-    #endregion
-
-    #region Poison Tower
-    [Header("\nPoison Attack")]
-    public static float Poison_Attack_Power;
-    public static float Poison_Attack_Speed;
-    public static float Poison_Attack_Pierce;
-    public static float Poison_Attack_Range;
-
-    [Header("Poison Target")]
-    public static int Poison_Target_Multi = 0;
-    public static int Poison_Target_chain = 0;
-
-    [Header("Poison Explosion")]
-    public static float Poison_Explosion_Range;
-
-    [Header("Poison")]
-    public static float Poison_Time;
-
-    private void GetPoisonTowerStat()
+    public void SetTowerUpgreadData(TowerUpgread towerUpgread)
     {
-        TowerStatus NOMAL = TowerPrefab[1].GetComponent<TowerStatus>();
-        Poison_Attack_Power = NOMAL.GetAttack_Power();
-        Poison_Attack_Speed = NOMAL.GetAttack_Speed();
-        Poison_Attack_Pierce = NOMAL.GetAttack_Pierce();
-        Poison_Attack_Range = NOMAL.GetAttack_Range();
-
-        Poison_Target_Multi = NOMAL.GetTaget_Multi();
-        Poison_Target_chain = NOMAL.GetTaget_chain();
-
-        Poison_Explosion_Range = NOMAL.GetExplosion_Range();
-
-        Poison_Time = NOMAL.GetPoison_Time();
+        TowerDatabaUp.Add(towerUpgread);
     }
 
-    #endregion
-
-    #region Fire Tower
-    [Header("\nFire Attack")]
-    public static float Fire_Attack_Power;
-    public static float Fire_Attack_Speed;
-    public static float Fire_Attack_Pierce;
-    public static float Fire_Attack_Range;
-
-    [Header("Fire Target")]
-    public static int Fire_Target_Multi = 0;
-    public static int Fire_Target_chain = 0;
-
-    [Header("Fire Explosion")]
-    public static float Fire_Explosion_Range;
-
-    [Header("Fire")]
-    public static float Fire_TickCount;
-    public static float Fire_TickSpeed;
-
-    private void GetFireTowerStat()
+    public static string GetTowerStatData(int TowerNum, int DataNum)
     {
-        TowerStatus NOMAL = TowerPrefab[1].GetComponent<TowerStatus>();
-        Fire_Attack_Power = NOMAL.GetAttack_Power();
-        Fire_Attack_Speed = NOMAL.GetAttack_Speed();
-        Fire_Attack_Pierce = NOMAL.GetAttack_Pierce();
-        Fire_Attack_Range = NOMAL.GetAttack_Range();
+        switch (DataNum)
+        {
+            case 0: return Convert.ToString(TowerDataStat[TowerNum].Type);
+            case 1: return Convert.ToString(TowerDataStat[TowerNum].AttackType);
 
-        Fire_Target_Multi = NOMAL.GetTaget_Multi();
-        Fire_Target_chain = NOMAL.GetTaget_chain();
+            case 2: return Convert.ToString(TowerDataStat[TowerNum].Money);
 
-        Fire_Explosion_Range = NOMAL.GetExplosion_Range();
+            case 3: return Convert.ToString(TowerDataStat[TowerNum].Attack_Power);
+            case 4: return Convert.ToString(TowerDataStat[TowerNum].Attack_Speed);
+            case 5: return Convert.ToString(TowerDataStat[TowerNum].Attack_Range);
+            case 6: return Convert.ToString(TowerDataStat[TowerNum].Attack_Pierce);
+            case 7: return Convert.ToString(TowerDataStat[TowerNum].Attack_Ex_Range);
 
-        Fire_TickCount = NOMAL.GetFire_TickCount();
-        Fire_TickSpeed = NOMAL.GetFire_TickSpeed();
+            case 8: return Convert.ToString(TowerDataStat[TowerNum].Target_Multi);
+            case 9: return Convert.ToString(TowerDataStat[TowerNum].Target_Chain);
+
+            case 10: return Convert.ToString(TowerDataStat[TowerNum].Poison_Time);
+            
+            case 11: return Convert.ToString(TowerDataStat[TowerNum].Fire_TickCount);
+            case 12: return Convert.ToString(TowerDataStat[TowerNum].Fire_TickSpeed);
+
+            case 13: return Convert.ToString(TowerDataStat[TowerNum].Slow_Value);
+            case 14: return Convert.ToString(TowerDataStat[TowerNum].Slow_Time);
+
+            case 15: return Convert.ToString(TowerDataStat[TowerNum].Freezing_Value);
+            case 16: return Convert.ToString(TowerDataStat[TowerNum].Freezing_Time);
+            default: return null;
+        }
     }
 
-    #endregion
-
-    #region Slow Tower
-    [Header("\nSlow Attack")]
-    public static float Slow_Attack_Power;
-    public static float Slow_Attack_Speed;
-    public static float Slow_Attack_Pierce;
-    public static float Slow_Attack_Range;
-
-    [Header("Slow Target")]
-    public static int Slow_Target_Multi = 0;
-    public static int Slow_Target_chain = 0;
-
-    [Header("Slow Explosion")]
-    public static float Slow_Explosion_Range;
-
-    [Header("Slow")]
-    public static float Slow_Value;
-    public static float Slow_Time;
-    public static float Slow_Freezing_Value;
-    public static float Slow_Freezing_Time;
-    private void GetSlowTowerStat()
+    public static string GetTowerUpgreadData(int TowerNum, int DataNum)
     {
-        TowerStatus NOMAL = TowerPrefab[1].GetComponent<TowerStatus>();
-        Slow_Attack_Power = NOMAL.GetAttack_Power();
-        Slow_Attack_Speed = NOMAL.GetAttack_Speed();
-        Slow_Attack_Pierce = NOMAL.GetAttack_Pierce();
-        Slow_Attack_Range = NOMAL.GetAttack_Range();
+        switch (DataNum)
+        {
+            case 0: return Convert.ToString(TowerDatabaUp[TowerNum].Money);
+            case 1: return Convert.ToString(TowerDatabaUp[TowerNum].Attack_Power);
+            case 2: return Convert.ToString(TowerDatabaUp[TowerNum].Attack_Speed);
+            case 3: return Convert.ToString(TowerDatabaUp[TowerNum].Attack_Range);
+            case 4: return Convert.ToString(TowerDatabaUp[TowerNum].Attack_Pierce);
+            case 5: return Convert.ToString(TowerDatabaUp[TowerNum].Attack_Ex_Range);
 
-        Slow_Target_Multi = NOMAL.GetTaget_Multi();
-        Slow_Target_chain = NOMAL.GetTaget_chain();
+            case 6: return Convert.ToString(TowerDatabaUp[TowerNum].Target_Multi);
+            case 7: return Convert.ToString(TowerDatabaUp[TowerNum].Target_Chain);
 
-        Slow_Explosion_Range = NOMAL.GetExplosion_Range();
+            case 8: return Convert.ToString(TowerDatabaUp[TowerNum].Poison_Time);
 
-        Slow_Value = NOMAL.GetSlow_Value();
-        Slow_Time = NOMAL.GetSlow_Time();
-        Slow_Freezing_Value = NOMAL.GetSlow_Freezing_Value();
-        Slow_Freezing_Time = NOMAL.GetSlow_Freezing_Time();
+            case 9: return Convert.ToString(TowerDatabaUp[TowerNum].Fire_TickCount);
+            case 10: return Convert.ToString(TowerDatabaUp[TowerNum].Fire_TickSpeed);
+
+            case 11: return Convert.ToString(TowerDatabaUp[TowerNum].Slow_Value);
+            case 12: return Convert.ToString(TowerDatabaUp[TowerNum].Slow_Time);
+
+            case 13: return Convert.ToString(TowerDatabaUp[TowerNum].Freezing_Value);
+            case 14: return Convert.ToString(TowerDatabaUp[TowerNum].Freezing_Time);
+            default: return null;
+        }
     }
-
-    #endregion
-
 }
-

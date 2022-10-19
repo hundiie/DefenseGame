@@ -23,13 +23,19 @@ public class PlayerCreate : MonoBehaviour
 
     private void Update()
     {
-        if (!IsCreate && PlayerInput.Key_MouseL) { PickTower = GetPlaneTower(); }
-
+        if (PlayerInput.Key_T && !PlayerInput.Key_MouseL) { Button_TowerSell(); }
         if (PlayerInput.Key_Num1 && !PlayerInput.Key_MouseL) { Button_TowerCreate(0); }
         if (PlayerInput.Key_Num2 && !PlayerInput.Key_MouseL) { Button_TowerCreate(1); }
         if (PlayerInput.Key_Num3 && !PlayerInput.Key_MouseL) { Button_TowerCreate(2); }
         if (PlayerInput.Key_Num4 && !PlayerInput.Key_MouseL) { Button_TowerCreate(3); }
-        if (PlayerInput.Key_Num5 && !PlayerInput.Key_MouseL) { Button_TowerSell(); }
+    }
+    private void LateUpdate()
+    {
+        if (!IsCreate && PlayerInput.Key_MouseL)
+        {
+            GameObject p = GetTowerPlane();
+            if (p != null) { PickTower = p; }
+        }
     }
     private void ColorChange(Renderer renderer, Color color ,float a)
     {
@@ -107,10 +113,7 @@ public class PlayerCreate : MonoBehaviour
                     
                     TOWER.transform.position = BuildVector;
                     _Plane.SetPlaneTower(TOWER);
-                    _Plane.SetTower(true);
-                    MAP.layer = 9;
-                    
-                    break;
+                    _Plane.SetTower(true);                    break;
                 }
                 else if (PlayerInput.Key_MouseL && !IsCheck)
                 { Debug.LogWarning("타워를 지을 수 없는 위치입니다."); break; }
@@ -126,30 +129,27 @@ public class PlayerCreate : MonoBehaviour
 
     #endregion
 
-    #region 타워 판매
+    #region 타워 판매 & 업글
+
     private GameObject SavePlane = null;
-    private GameObject GetPlaneTower()
+    
+    private GameObject GetTowerPlane()
     {
-        // 타워 불러옴
-        GameObject MAP = CameraPoint.GetMousePoint("Tower");
-        if (MAP == null) // 타워가 없으면 타워 바닥을 불러옴
-        { MAP = CameraPoint.GetMousePoint("TowerPlane"); }
-        else // 타워가 있다면 타워의 부모를 불러 바닥을 불러옴
-        { MAP = MAP.transform.parent.gameObject; }
-
-        // 저장된 위치가 다르면 색 복구
-        if (SavePlane != null) { SavePlane.GetComponent<Plane>().SetNomalColor(); SavePlane = null; }
-        
-        if (MAP != null)
+        GameObject MapTower = CameraPoint.GetMousePoint("Map");
+        if (MapTower != null && MapTower.tag == "Plane" && MapTower.GetComponent<Plane>().GetTower())
         {
-            MAP.GetComponent<Plane>().SetColor(Color.cyan);
-
-            SavePlane = MAP;
-
-            return MAP;
+            if (SavePlane != null)
+            {
+                SavePlane.GetComponent<Plane>().SetNomalColor();
+                SavePlane = null;
+            }
+            MapTower.GetComponent<Plane>().SetColor(Color.green);
+            SavePlane = MapTower;
+            return MapTower;
         }
         return null;
     }
+
     private void _TowerSell(GameObject plane)
     {
         if (plane == null) { return; }
@@ -176,6 +176,7 @@ public class PlayerCreate : MonoBehaviour
     }
     public void Button_TowerSell()
     {
-        _TowerSell(PickTower);
+        GameObject Pick = PickTower;
+        _TowerSell(Pick);
     }
 }

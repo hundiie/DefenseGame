@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Plane
   - Object
+  - GameManager
+  - TowerManager
   layers:
   - Default
   - TransparentFX

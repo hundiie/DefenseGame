@@ -96,6 +96,8 @@ GameObject:
   - component: {fileID: 5862702940670176114}
   - component: {fileID: 615847893965199605}
   - component: {fileID: 5719667607474397952}
+  - component: {fileID: 8305894706292052047}
+  - component: {fileID: 5420963367355565902}
   m_Layer: 8
   m_Name: 01. Tower 01
   m_TagString: Untagged
@@ -197,16 +199,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e165b2640736db04bb5f16e1d383aec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TowerType: 0
+  Type: 0
+  AttackType: 0
+  Money: 100
   Attack_Power: 10
-  Attack_Speed: 2
-  Attack_Pierce: 0
+  Attack_Speed: 0.5
   Attack_Range: 3
+  Attack_Pierce: 0
+  Attack_Ex_Range: 0
   Target_Multi: 0
-  Target_chain: 0
-  Explosion_Range: 0
+  Target_Chain: 0
   Poison_Time: 0
   Fire_TickCount: 0
   Fire_TickSpeed: 0
   Slow_Value: 0
   Slow_Time: 0
+  Freezing_Value: 0
+  Freezing_Time: 0
+--- !u!114 &8305894706292052047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7029040891193831851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bd883d20ef98db419d81af24735d76e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Money: 50
+  Attack_Power: 8
+  Attack_Speed: 0.2
+  Attack_Range: 0.3
+  Attack_Pierce: 0
+  Attack_Ex_Range: 0
+  Target_Multi: 0
+  Target_Chain: 0
+  Poison_Time: 0
+  Fire_TickCount: 0
+  Fire_TickSpeed: 0
+  Slow_Value: 0
+  Slow_Time: 0
+  Freezing_Value: 0
+  Freezing_Time: 0
+--- !u!114 &5420963367355565902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7029040891193831851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d637194ca6630248b86836f9a1473fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 1
+  Type: 0
+  AttackType: 0
+  Money: 0
+  Power: 0
+  Speed: 0
+  Range: 0
+  Pierce: 0
+  EX_Range: 0
+  Multi: 0
+  Chain: 0
+  PoisonTime: 0
+  FireCount: 0
+  FireTime: 0
+  IceValue: 0
+  IceTime: 0
+  FreezingValue: 0
+  FreezingTime: 0

@@ -2019,7 +2019,7 @@ GameObject:
   - component: {fileID: 1537145433}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2051,36 +2051,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a313b54e72dda874f8649a2514415d9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Nomal_Attack_Range: 0
-  Nomal_Target_Multi: 0
-  Nomal_Target_chain: 0
-  Nomal_Explosion_Range: 0
-  Poison_Attack_Power: 0
-  Poison_Attack_Speed: 0
-  Poison_Attack_Pierce: 0
-  Poison_Attack_Range: 0
-  Poison_Target_Multi: 0
-  Poison_Target_chain: 0
-  Poison_Explosion_Range: 0
-  Poison_Time: 0
-  Fire_Attack_Power: 0
-  Fire_Attack_Speed: 0
-  Fire_Attack_Pierce: 0
-  Fire_Attack_Range: 0
-  Fire_Target_Multi: 0
-  Fire_Target_chain: 0
-  Fire_Explosion_Range: 0
-  Fire_TickCount: 0
-  Fire_TickSpeed: 0
-  Slow_Attack_Power: 0
-  Slow_Attack_Speed: 0
-  Slow_Attack_Pierce: 0
-  Slow_Attack_Range: 0
-  Slow_Target_Multi: 0
-  Slow_Target_chain: 0
-  Slow_Explosion_Range: 0
-  Slow_Value: 0
-  Slow_Time: 0
 --- !u!1 &1537316106
 GameObject:
   m_ObjectHideFlags: 0

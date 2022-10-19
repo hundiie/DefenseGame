@@ -56,24 +56,29 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\01. Script\06. UI\00. Button\ButtonLobby.cs" />
     <Compile Include="Assets\01. Script\04. Monster\MonsterNav.cs" />
     <Compile Include="Assets\01. Script\05. Tower\TowerManager.cs" />
     <Compile Include="Assets\01. Script\04. Monster\MonsterManager.cs" />
     <Compile Include="Assets\01. Script\02. Player\PlayerCreate.cs" />
+    <Compile Include="Assets\01. Script\06. UI\UI_Tower.cs" />
     <Compile Include="Assets\01. Script\02. Player\PlayerInput.cs" />
     <Compile Include="Assets\01. Script\04. Monster\MonsterStatus.cs" />
+    <Compile Include="Assets\01. Script\02. Player\PlayerStatus.cs" />
     <Compile Include="Assets\01. Script\03. Map\Plane.cs" />
     <Compile Include="Assets\01. Script\04. Monster\MonsterEffect.cs" />
+    <Compile Include="Assets\01. Script\08. Data\DataManager.cs" />
+    <Compile Include="Assets\01. Script\GameManager.cs" />
+    <Compile Include="Assets\01. Script\05. Tower\TowerStatus.cs" />
     <Compile Include="Assets\01. Script\01. Camera\CameraMove.cs" />
+    <Compile Include="Assets\01. Script\07. Scene\SceneLoad.cs" />
+    <Compile Include="Assets\01. Script\06. UI\00. Button\ButtonTitle.cs" />
     <Compile Include="Assets\01. Script\04. Monster\MonsterHealth.cs" />
     <Compile Include="Assets\01. Script\01. Camera\CameraPoint.cs" />
-    <Compile Include="Assets\01. Script\GameManager.cs" />
-    <Compile Include="Assets\01. Script\06. UI\00. Button\ButtonTitle.cs" />
-    <Compile Include="Assets\01. Script\07. Scene\SceneLoad.cs" />
-    <Compile Include="Assets\01. Script\06. UI\00. Button\ButtonLobby.cs" />
-    <Compile Include="Assets\01. Script\05. Tower\TowerStatus.cs" />
-    <Compile Include="Assets\01. Script\02. Player\PlayerStatus.cs" />
-    <Compile Include="Assets\01. Script\06. UI\UI_Tower.cs" />
+    <Compile Include="Assets\01. Script\05. Tower\Tower.cs" />
+    <Compile Include="Assets\01. Script\05. Tower\TowerUpgread.cs" />
+    <Compile Include="Assets\01. Script\05. Tower\TowerAttack.cs" />
+    <Compile Include="Assets\01. Script\05. Tower\Bullet\BulletManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

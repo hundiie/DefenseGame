@@ -32,6 +32,7 @@ public class PlayerInput : MonoBehaviour
     public static bool Key_E { get; private set; }
     public static bool Key_R { get; private set; }
     public static bool Key_F { get; private set; }
+    public static bool Key_T { get; private set; }
 
 
     private void FixedUpdate()
@@ -65,6 +66,7 @@ public class PlayerInput : MonoBehaviour
         Key_E = Input.GetKey(KeyCode.E);
         Key_R = Input.GetKey(KeyCode.R);
         Key_F = Input.GetKey(KeyCode.F);
+        Key_T = Input.GetKey(KeyCode.T);
 
     }
 }

@@ -491,7 +491,7 @@ GameObject:
   - component: {fileID: 347137373}
   m_Layer: 0
   m_Name: TowerManager
-  m_TagString: Untagged
+  m_TagString: TowerManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -508,41 +508,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92b0b49c3dc7ff84a8c7efab518bb8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TowerPrefab:
-  - {fileID: 7029040891193831851, guid: 14bfbec0b26363c4c9d59e7713ea2645, type: 3}
-  - {fileID: 7049784031432933133, guid: c7fea40d65a521c45b226221cfab224e, type: 3}
-  - {fileID: 3939630127978061713, guid: d6e8dabaffd7f5841a17b5c18d7d9dad, type: 3}
-  - {fileID: 2687269597366937486, guid: d93fefb79eef2df448b6fdc256c3f98c, type: 3}
-  Nomal_Attack_Range: 0
-  Nomal_Target_Multi: 0
-  Nomal_Target_chain: 0
-  Nomal_Explosion_Range: 0
-  Poison_Attack_Power: 0
-  Poison_Attack_Speed: 0
-  Poison_Attack_Pierce: 0
-  Poison_Attack_Range: 0
-  Poison_Target_Multi: 0
-  Poison_Target_chain: 0
-  Poison_Explosion_Range: 0
-  Poison_Time: 0
-  Fire_Attack_Power: 0
-  Fire_Attack_Speed: 0
-  Fire_Attack_Pierce: 0
-  Fire_Attack_Range: 0
-  Fire_Target_Multi: 0
-  Fire_Target_chain: 0
-  Fire_Explosion_Range: 0
-  Fire_TickCount: 0
-  Fire_TickSpeed: 0
-  Slow_Attack_Power: 0
-  Slow_Attack_Speed: 0
-  Slow_Attack_Pierce: 0
-  Slow_Attack_Range: 0
-  Slow_Target_Multi: 0
-  Slow_Target_chain: 0
-  Slow_Explosion_Range: 0
-  Slow_Value: 0
-  Slow_Time: 0
 --- !u!4 &347137374
 Transform:
   m_ObjectHideFlags: 0

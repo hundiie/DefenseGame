@@ -362,12 +362,17 @@
 "Assets/01. Script/04. Monster/MonsterManager.cs"
 "Assets/01. Script/04. Monster/MonsterNav.cs"
 "Assets/01. Script/04. Monster/MonsterStatus.cs"
+"Assets/01. Script/05. Tower/Bullet/BulletManager.cs"
+"Assets/01. Script/05. Tower/Tower.cs"
+"Assets/01. Script/05. Tower/TowerAttack.cs"
 "Assets/01. Script/05. Tower/TowerManager.cs"
 "Assets/01. Script/05. Tower/TowerStatus.cs"
+"Assets/01. Script/05. Tower/TowerUpgread.cs"
 "Assets/01. Script/06. UI/00. Button/ButtonLobby.cs"
 "Assets/01. Script/06. UI/00. Button/ButtonTitle.cs"
 "Assets/01. Script/06. UI/UI_Tower.cs"
 "Assets/01. Script/07. Scene/SceneLoad.cs"
+"Assets/01. Script/08. Data/DataManager.cs"
 "Assets/01. Script/GameManager.cs"
 -langversion:9.0
 
