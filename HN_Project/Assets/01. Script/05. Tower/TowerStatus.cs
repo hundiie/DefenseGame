@@ -7,6 +7,7 @@ public class TowerStatus : MonoBehaviour
     [Header("Type")]
     public int Type;
     public int AttackType;
+    public int DamageType;
 
     [Header("Money")]
     public int Money;
@@ -37,10 +38,11 @@ public class TowerStatus : MonoBehaviour
     public float Freezing_Value = 0;
     public float Freezing_Time = 0;
 
-    public TowerStatus(int type, int attacktype,int money, float power, float speed, float range, float pierce, float ex_renge, int multi, int chain, float P_time, float F_Tcount, float F_Tspeed, float S_value, float S_time, float FIZ_value, float FIZ_time)
+    public TowerStatus(int type, int attacktype, int damagetype, int money, float power, float speed, float range, float pierce, float ex_renge, int multi, int chain, float P_time, float F_Tcount, float F_Tspeed, float S_value, float S_time, float FIZ_value, float FIZ_time)
     {
         Type = type;
         AttackType = attacktype;
+        DamageType = damagetype;
 
         Money = money;
 

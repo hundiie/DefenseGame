@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1762815326915696596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1951547411001406716}
+  m_Layer: 8
+  m_Name: BulletSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1951547411001406716
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762815326915696596}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3939630126485505837}
+  m_Father: {fileID: 3939630127978061741}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3939630126485505836
 GameObject:
   m_ObjectHideFlags: 0
@@ -26,11 +58,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3939630126485505836}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5}
-  m_LocalScale: {x: 0.2857143, y: 0.2, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.49999997}
+  m_LocalScale: {x: 0.28571427, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3939630127978061741}
+  m_Father: {fileID: 1951547411001406716}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3939630126485505832
@@ -95,12 +127,14 @@ GameObject:
   - component: {fileID: 3939630127978061740}
   - component: {fileID: 3939630127978061743}
   - component: {fileID: 3939630127978061742}
+  - component: {fileID: -9102911207264810090}
+  - component: {fileID: 83701358052385423}
   - component: {fileID: -8119559912641704543}
   - component: {fileID: 4157196627146629754}
-  - component: {fileID: -3875306586207938594}
+  - component: {fileID: -2247994894489679958}
   m_Layer: 8
   m_Name: 03. Tower 03
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,7 +151,7 @@ Transform:
   m_LocalScale: {x: 0.7, y: 1, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3939630126485505837}
+  - {fileID: 1951547411001406716}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -187,6 +221,32 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!135 &-9102911207264810090
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3939630127978061713}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &83701358052385423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3939630127978061713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f618ad77414781a448ecd8793f1f1ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetMonster: []
 --- !u!114 &-8119559912641704543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 2
   AttackType: 1
+  DamageType: 0
   Money: 200
   Attack_Power: 5
   Attack_Speed: 0.5
@@ -243,7 +304,7 @@ MonoBehaviour:
   Slow_Time: 0
   Freezing_Value: 0
   Freezing_Time: 0
---- !u!114 &-3875306586207938594
+--- !u!114 &-2247994894489679958
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -252,12 +313,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3939630127978061713}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d637194ca6630248b86836f9a1473fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 60692bb1fe6aba1419ca70a4121cf4f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Level: 1
   Type: 0
   AttackType: 0
+  DamageType: 0
   Money: 0
   Power: 0
   Speed: 0

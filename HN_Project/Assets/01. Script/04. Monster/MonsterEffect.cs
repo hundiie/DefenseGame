@@ -16,6 +16,8 @@ public class MonsterEffect : MonoBehaviour
     private MonsterStatus _MonsterStatus;
     private MonsterHealth _MonsterHealth;
     private MonsterNav _MonsterNav;
+    private MonsterManager _MonsterManager;
+
     // »ö °ü·Ã
     private Renderer _Renderer;
     private Color NomalColor;
@@ -47,6 +49,7 @@ public class MonsterEffect : MonoBehaviour
 
     private void Awake()
     {
+        _MonsterManager = GameObject.FindGameObjectWithTag("MonsterManager").GetComponent<MonsterManager>();
         _MonsterStatus = GetComponent<MonsterStatus>();
         _MonsterHealth = GetComponent<MonsterHealth>();
         _MonsterNav = GetComponent<MonsterNav>();
@@ -139,7 +142,11 @@ public class MonsterEffect : MonoBehaviour
     }
     private IEnumerator _AddDie()
     {
-        _MonsterNav.SetMoveSpeed(0);
+        _MonsterManager.RemoteMonster(gameObject);
+        GetComponent<MonsterTarget>().ClearTowerTarget();
+        GetComponent<CapsuleCollider>().radius = 0.2f;
+        _MonsterNav.SetNavMesh(false);
+
         ChangeColor(Color.black);
 
         for (float i = 1; i > 0; i -= Time.deltaTime)
@@ -147,9 +154,9 @@ public class MonsterEffect : MonoBehaviour
             Color This = _Renderer.material.color;
             This.a = i;
             _Renderer.material.color = This;
+            
             yield return null;
         }
-
         Destroy(gameObject);
     }
 

@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class BulletManager : MonoBehaviour
 {
+    private SphereCollider _SphereCollider;
+
+    private GameObject TargetObject;
+
+    private int AttackType;
+    private int DamageType;
+
     private float Power;
     private float Range;
     private float Pierce;
     private float EX_Range;
 
-    private int Chain;
+    [SerializeField] private int Chain;
 
     private float PoisonTime;
 
@@ -22,23 +29,99 @@ public class BulletManager : MonoBehaviour
     private float FreezingValue;
     private float FreezingTime;
 
-    void SetBullet(float power, float range, float pierce, float ex_range, int chain, float po_time, float fi_count, float fi_time, float ice_value, float ice_time, float fre_value, float fre_time)
+    private void Start()
     {
-        Power = power;
-        Range = range;
-        Pierce = pierce;
-        EX_Range = ex_range;
-        Chain = chain;
+        _SphereCollider = GetComponent<SphereCollider>();
+        _SphereCollider.radius = 0.1f;
+        _SphereCollider.enabled = false;
+        StartCoroutine(MoveTaget(TargetObject.transform.position));
+    }
+    public void SetTarget(GameObject targetPosition)
+    {
+        TargetObject = targetPosition;
+    }
+    public void SetBullet(TowerInGame towerInGame)
+    {
+        AttackType = towerInGame.AttackType;
+        DamageType = towerInGame.DamageType;
 
-        PoisonTime = po_time;
+        Power = towerInGame.Power;
+        Range = towerInGame.Range;
+        Pierce = towerInGame.Pierce;
+        EX_Range = towerInGame.EX_Range;
+        Chain = towerInGame.Chain;
+
+        PoisonTime = towerInGame.PoisonTime;
         
-        FireCount = fi_count;
-        FireTime = fi_time;
+        FireCount = towerInGame.FireCount;
+        FireTime = towerInGame.FireTime;
 
-        SlowValue = ice_value;
-        SlowTime = ice_time;
+        SlowValue = towerInGame.IceValue;
+        SlowTime = towerInGame.IceTime;
 
-        FreezingValue = fre_value;
-        FreezingTime = fre_time;
+        FreezingValue = towerInGame.FreezingValue;
+        FreezingTime = towerInGame.FreezingTime;
+    }
+
+    private IEnumerator MoveTaget(Vector3 TargetPos)
+    {
+        while (true)
+        {
+            float distence = Vector3.Distance(transform.position, TargetPos);
+            transform.position = Vector3.MoveTowards(transform.position, TargetPos, 0.1f);
+            if (distence < 0.03f) { break; }
+            yield return null;
+        }
+
+        // 공격 부분
+
+
+        Chain --;
+        if (Chain <= 0)
+        {
+            StopAllCoroutines();
+            Destroy(gameObject);
+        }
+        StartCoroutine(_SetNewTarget());
+    }
+
+    public GameObject NextTarget = null;
+    private IEnumerator _SetNewTarget()
+    {
+        _SphereCollider.enabled = true;
+        while (true)
+        {
+            _SphereCollider.radius += Time.deltaTime * 200;
+            if (_SphereCollider.radius >= Range * 7)
+            {
+                NextTarget = null; 
+                StopAllCoroutines();
+                Destroy(gameObject);
+                break;
+            }
+            
+            if (NextTarget != null)
+            {
+                _SphereCollider.radius = 0.1f;
+                _SphereCollider.enabled = false;
+                break;
+            }
+            yield return null;
+        }
+        Debug.Log(NextTarget);
+        if (NextTarget != null)
+        {
+            StartCoroutine(MoveTaget(NextTarget.transform.position));
+        }
+        NextTarget = null;
+    }
+
+    public void GetNextTarget(GameObject nextTarget)
+    {
+        if (nextTarget != TargetObject && NextTarget == null)
+        {
+            NextTarget = nextTarget;
+            TargetObject = NextTarget;
+        }
     }
 }

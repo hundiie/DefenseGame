@@ -14,15 +14,18 @@ public class MonsterManager : MonoBehaviour
     public int Stage = 1;
     public float SpawnTime;
 
-
-    [SerializeField] private List<int> StageMonster;
     private bool IsStage;
+    [SerializeField] private List<int> StageMonster; // 스테이지에 나올 몬스터 정보
 
+    private List<GameObject> fieldMonster; // 필드에 있는 몬스터 정보
+    public List<GameObject> FieldMonster => fieldMonster;
+    
     private void Awake()
     {
+        fieldMonster = new List<GameObject>();
+
         IsStage = false;
     }
-
     private void Update()
     {
         if (PlayerInput.Key_F)
@@ -31,6 +34,10 @@ public class MonsterManager : MonoBehaviour
         }
     }
 
+    public int GetFieldMonserNumber()
+    {
+        return fieldMonster.Count;
+    }
     private void StageStart(int stage)
     {
         if (IsStage)
@@ -114,8 +121,8 @@ public class MonsterManager : MonoBehaviour
             for (int i = 0; i < StageMonster.Count; i++)
             {
                 GameObject Mon = Instantiate(MonsterPrefab[StageMonster[i]], Start.transform.position, Quaternion.identity);
+                fieldMonster.Add(Mon);
                 Mon.GetComponent<MonsterNav>().SetTarget(End.transform.position);
-
                 yield return new WaitForSeconds(SpawnTime);
             }
 
@@ -123,5 +130,10 @@ public class MonsterManager : MonoBehaviour
             StageMonster.Clear();
             IsStage = false;
         }
+    }
+
+    public void RemoteMonster(GameObject enamy)
+    {
+        fieldMonster.Remove(enamy);
     }
 }

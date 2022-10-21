@@ -47,21 +47,45 @@ public class PlayerCreate : MonoBehaviour
 
     #region 타워 제작
 
-    private GameObject GetTower(GameObject Plane, int TowerNum)
+    private GameObject GetBuildTower(GameObject Plane, int TowerNum)
     {
         if (TowerNum >= Tower.Length){ return null; }
 
         GameObject InstantiateTower = Instantiate(Tower[TowerNum], new Vector3(0, -100, 0), Quaternion.identity);
         if (Plane != null) { InstantiateTower.transform.parent = Plane.transform; }
         
+        Renderer[] BuildColor = null;
+        BuildColor = InstantiateTower.GetComponentsInChildren<Renderer>();
+        for (int i = 0; i < BuildColor.Length; i++)
+        {
+            BuildColor[i].material = BuildMaterial;
+        }
+
+        Destroy(InstantiateTower.GetComponent<NavMeshObstacle>());
+        Destroy(InstantiateTower.GetComponent<TowerStatus>());
+        Destroy(InstantiateTower.GetComponent<TowerUpgread>());
+        Destroy(InstantiateTower.GetComponent<TowerInGame>());
+        Destroy(InstantiateTower.GetComponent<TowerAttack>());
+        Destroy(InstantiateTower.GetComponent<SphereCollider>());
+
         return InstantiateTower;
     }
+    private GameObject GetTower(GameObject Plane, int TowerNum)
+    {
+        if (TowerNum >= Tower.Length) { return null; }
+
+        GameObject InstantiateTower = Instantiate(Tower[TowerNum], new Vector3(0, -100, 0), Quaternion.identity);
+        if (Plane != null) { InstantiateTower.transform.parent = Plane.transform; }
+
+        return InstantiateTower;
+    }
+
     private IEnumerator _TowerCreate(int TowerNum)
     {
         IsCreate = true;
         Renderer[] BuildColor = null;
-        
-        GameObject T = GetTower(null, TowerNum);
+
+        GameObject T = GetBuildTower(null, TowerNum);
 
         if (T == null)
         { Debug.LogWarning("범위 외 타워를 호출했습니다."); IsCreate = false; }
@@ -70,10 +94,6 @@ public class PlayerCreate : MonoBehaviour
             //색 바꾸기
             T.GetComponent<NavMeshObstacle>().enabled = false;
             BuildColor = T.GetComponentsInChildren<Renderer>();
-            for (int i = 0; i < BuildColor.Length; i++)
-            {
-                BuildColor[i].material = BuildMaterial;
-            }
         }
         while (IsCreate)
         {

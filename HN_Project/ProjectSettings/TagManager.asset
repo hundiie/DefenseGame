@@ -8,6 +8,8 @@ TagManager:
   - Object
   - GameManager
   - TowerManager
+  - MonsterManager
+  - Tower
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - Map
   - Tower
   - TowerPlane
-  - 
+  - Bullet
   - 
   - 
   - 

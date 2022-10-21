@@ -94,28 +94,28 @@ public class TowerManager : MonoBehaviour
         {
             case 0: return Convert.ToString(TowerDataStat[TowerNum].Type);
             case 1: return Convert.ToString(TowerDataStat[TowerNum].AttackType);
+            case 2: return Convert.ToString(TowerDataStat[TowerNum].DamageType);
+            case 3: return Convert.ToString(TowerDataStat[TowerNum].Money);
 
-            case 2: return Convert.ToString(TowerDataStat[TowerNum].Money);
+            case 4: return Convert.ToString(TowerDataStat[TowerNum].Attack_Power);
+            case 5: return Convert.ToString(TowerDataStat[TowerNum].Attack_Speed);
+            case 6: return Convert.ToString(TowerDataStat[TowerNum].Attack_Range);
+            case 7: return Convert.ToString(TowerDataStat[TowerNum].Attack_Pierce);
+            case 8: return Convert.ToString(TowerDataStat[TowerNum].Attack_Ex_Range);
 
-            case 3: return Convert.ToString(TowerDataStat[TowerNum].Attack_Power);
-            case 4: return Convert.ToString(TowerDataStat[TowerNum].Attack_Speed);
-            case 5: return Convert.ToString(TowerDataStat[TowerNum].Attack_Range);
-            case 6: return Convert.ToString(TowerDataStat[TowerNum].Attack_Pierce);
-            case 7: return Convert.ToString(TowerDataStat[TowerNum].Attack_Ex_Range);
+            case 9: return Convert.ToString(TowerDataStat[TowerNum].Target_Multi);
+            case 10: return Convert.ToString(TowerDataStat[TowerNum].Target_Chain);
 
-            case 8: return Convert.ToString(TowerDataStat[TowerNum].Target_Multi);
-            case 9: return Convert.ToString(TowerDataStat[TowerNum].Target_Chain);
-
-            case 10: return Convert.ToString(TowerDataStat[TowerNum].Poison_Time);
+            case 11: return Convert.ToString(TowerDataStat[TowerNum].Poison_Time);
             
-            case 11: return Convert.ToString(TowerDataStat[TowerNum].Fire_TickCount);
-            case 12: return Convert.ToString(TowerDataStat[TowerNum].Fire_TickSpeed);
+            case 12: return Convert.ToString(TowerDataStat[TowerNum].Fire_TickCount);
+            case 13: return Convert.ToString(TowerDataStat[TowerNum].Fire_TickSpeed);
 
-            case 13: return Convert.ToString(TowerDataStat[TowerNum].Slow_Value);
-            case 14: return Convert.ToString(TowerDataStat[TowerNum].Slow_Time);
+            case 14: return Convert.ToString(TowerDataStat[TowerNum].Slow_Value);
+            case 15: return Convert.ToString(TowerDataStat[TowerNum].Slow_Time);
 
-            case 15: return Convert.ToString(TowerDataStat[TowerNum].Freezing_Value);
-            case 16: return Convert.ToString(TowerDataStat[TowerNum].Freezing_Time);
+            case 16: return Convert.ToString(TowerDataStat[TowerNum].Freezing_Value);
+            case 17: return Convert.ToString(TowerDataStat[TowerNum].Freezing_Time);
             default: return null;
         }
     }
@@ -125,6 +125,7 @@ public class TowerManager : MonoBehaviour
         switch (DataNum)
         {
             case 0: return Convert.ToString(TowerDatabaUp[TowerNum].Money);
+
             case 1: return Convert.ToString(TowerDatabaUp[TowerNum].Attack_Power);
             case 2: return Convert.ToString(TowerDatabaUp[TowerNum].Attack_Speed);
             case 3: return Convert.ToString(TowerDatabaUp[TowerNum].Attack_Range);
